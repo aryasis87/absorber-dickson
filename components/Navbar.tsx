@@ -65,8 +65,8 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}>
-                  <ProductItem href="/produk/ethylene-absorber" icon={<ShoppingBag size={18} />} title="Ethylene Absorber" />
-                  <ProductItem href="/produk/kemasan-buah" icon={<PackageIcon />} title="Kemasan Buah" />
+                  <ProductItem href="/#features" icon={<ShoppingBag size={18} />} title="Ethylene Absorber" />
+                  <ProductItem href="/#features" icon={<PackageIcon />} title="Kemasan Buah" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -139,8 +139,8 @@ export default function Navbar() {
                       
                       {productsOpen && (
                         <div className="pl-4 space-y-2 mt-2">
-                          <MobileLink href="/produk/ethylene-absorber" onClick={() => setIsOpen(false)}>Ethylene Absorber</MobileLink>
-                          <MobileLink href="/produk/kemasan-buah" onClick={() => setIsOpen(false)}>Kemasan Buah</MobileLink>
+                          <MobileLink href="/#features" onClick={() => setIsOpen(false)}>Ethylene Absorber</MobileLink>
+                          <MobileLink href="/#features" onClick={() => setIsOpen(false)}>Kemasan Buah</MobileLink>
                         </div>
                       )}
                     </div>

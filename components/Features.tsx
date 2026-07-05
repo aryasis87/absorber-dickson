@@ -148,7 +148,7 @@ const Features = () => {
               untuk perusahaan anda di halaman hubungi kami.
             </p>
             <Link
-              href="/produk"
+              href="/#features"
               className="text-[#198754] font-semibold text-sm border-b border-[#198754] inline-block"
             >
               — Semua Produk
