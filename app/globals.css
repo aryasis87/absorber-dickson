@@ -21,3 +21,5 @@ body {
   background-size: 12px 12px;
 }
 
+
+h1, h2, h3 { font-family: var(--font-display), system-ui, sans-serif; letter-spacing: -0.02em; }
