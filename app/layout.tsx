@@ -5,10 +5,10 @@ import Footer from '@/components/Footer'
 
 const display = Archivo({ subsets: ["latin"], variable: "--font-display", weight: ["600","700","800"] })
 
-const __jsonld = {"@context":"https://schema.org","@type":"CreativeWork","name":"EthyleneAbsorber — Konsep Korporat","description":"Landing page produk ethylene absorber","url":"https://absorber-dickson.vercel.app"};
+const __jsonld = {"@context":"https://schema.org","@type":"CreativeWork","name":"EthyleneAbsorber — Konsep Korporat","description":"Landing page produk ethylene absorber","url":"https://absorber-dickson.pintuweb.com"};
 
 export const metadata = {
-  metadataBase: new URL("https://absorber-dickson.vercel.app"),
+  metadataBase: new URL("https://absorber-dickson.pintuweb.com"),
   title: "EthyleneAbsorber — Konsep Korporat | Dickson Synergy",
   description: "Landing page EthyleneAbsorber konsep \"Korporat\": mengedepankan kredibilitas PT Dickson Synergy sebagai penyedia solusi industri.",
   applicationName: "EthyleneAbsorber",
@@ -16,11 +16,11 @@ export const metadata = {
   authors: [{ name: "EthyleneAbsorber" }],
   creator: "EthyleneAbsorber",
   publisher: "EthyleneAbsorber",
-  alternates: { canonical: "https://absorber-dickson.vercel.app" },
+  alternates: { canonical: "https://absorber-dickson.pintuweb.com" },
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://absorber-dickson.vercel.app",
+    url: "https://absorber-dickson.pintuweb.com",
     siteName: "EthyleneAbsorber",
     title: "EthyleneAbsorber — Konsep Korporat | Dickson Synergy",
     description: "Landing page EthyleneAbsorber konsep \"Korporat\": mengedepankan kredibilitas PT Dickson Synergy sebagai penyedia solusi industri.",
