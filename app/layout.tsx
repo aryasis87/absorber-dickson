@@ -1,18 +1,78 @@
 import "./globals.css"
-import { Archivo } from "next/font/google"
+import { Archivo, IBM_Plex_Mono } from "next/font/google"
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const display = Archivo({ subsets: ["latin"], variable: "--font-display", weight: ["600","700","800"] })
+/* Archivo memikul seluruh teks — grotesk industrial yang rapat dan tegas.
+   IBM Plex Mono memikul lapisan data: kode standar, satuan, dan penomoran. */
+const display = Archivo({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+})
 
-const __jsonld = {"@context":"https://schema.org","@type":"CreativeWork","name":"EthyleneAbsorber — Konsep Korporat","description":"Landing page produk ethylene absorber","url":"https://absorber-dickson.pintuweb.com"};
+const tech = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-tech",
+  weight: ["400", "500", "600"],
+  display: "swap",
+})
+
+const __jsonld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://absorber-dickson.pintuweb.com/#organisasi",
+      name: "PT Dickson Synergy",
+      url: "https://absorber-dickson.pintuweb.com",
+      description:
+        "Penyedia solusi proteksi industri: ethylene absorber, silica gel, dan desiccant bersertifikat untuk rantai pasok komoditas segar.",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Jl. Teknologi No. 123",
+        addressLocality: "Bandung",
+        postalCode: "40234",
+        addressCountry: "ID",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+62-812-3456-7890",
+        contactType: "sales",
+        areaServed: "ID",
+        availableLanguage: ["id", "en"],
+      },
+    },
+    {
+      "@type": "Product",
+      name: "EthyleneAbsorber",
+      brand: { "@type": "Brand", name: "Dickson Synergy" },
+      description:
+        "Sachet penyerap gas etilen berbasis kalium permanganat. Satu sachet efektif untuk volume 1–2 m³ selama 30 hari (hingga 45 hari pada kondisi ideal).",
+      category: "Freshness keeper / ethylene absorber",
+      additionalProperty: [
+        { "@type": "PropertyValue", name: "Registrasi BPOM RI", value: "NA18191100273" },
+        { "@type": "PropertyValue", name: "Cakupan per sachet", value: "1–2 m³" },
+        { "@type": "PropertyValue", name: "Masa efektif", value: "30 hari (ideal 45 hari)" },
+      ],
+    },
+    {
+      "@type": "CreativeWork",
+      name: "EthyleneAbsorber — Konsep Korporat",
+      description: "Landing page produk ethylene absorber, konsep desain \"Korporat\".",
+      url: "https://absorber-dickson.pintuweb.com",
+    },
+  ],
+}
 
 export const metadata = {
   metadataBase: new URL("https://absorber-dickson.pintuweb.com"),
   title: "EthyleneAbsorber — Konsep Korporat | Dickson Synergy",
-  description: "Landing page EthyleneAbsorber konsep \"Korporat\": mengedepankan kredibilitas PT Dickson Synergy sebagai penyedia solusi industri.",
+  description:
+    "Landing page EthyleneAbsorber konsep \"Korporat\": mengedepankan kredibilitas PT Dickson Synergy sebagai penyedia solusi industri. Tersertifikasi BPOM RI NA18191100273, FDA 21 CFR 175.300, dan EU No 10/2011.",
   applicationName: "EthyleneAbsorber",
-  keywords: ["ethylene absorber", "dickson synergy", "landing page korporat", "desain web"],
+  keywords: ["ethylene absorber", "dickson synergy", "landing page korporat", "desain web", "silica gel", "desiccant"],
   authors: [{ name: "EthyleneAbsorber" }],
   creator: "EthyleneAbsorber",
   publisher: "EthyleneAbsorber",
@@ -39,15 +99,27 @@ export const metadata = {
   },
 }
 
+export const viewport = {
+  themeColor: "#003c5c",
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className="scroll-smooth">
-      <body className={`${display.variable} antialiased bg-white text-gray-800 selection:bg-lime-200 selection:text-black overflow-x-hidden max-w-[100vw]`}>
+      <body
+        className={`${display.variable} ${tech.variable} antialiased bg-white text-slate-700 selection:bg-lime selection:text-ink overflow-x-hidden max-w-[100vw]`}
+      >
+        <a
+          href="#konten"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-white"
+        >
+          Lompat ke konten utama
+        </a>
         <Navbar />
-        <main>{children}</main>
+        <main id="konten">{children}</main>
         <Footer />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(__jsonld) }} />
-        </body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(__jsonld) }} />
+      </body>
     </html>
   )
 }

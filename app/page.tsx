@@ -1,18 +1,30 @@
-'use client'
-
 import Hero from '@/components/Hero'
-import Features from '@/components/Features'
+import CertBar from '@/components/CertBar'
+import Problem from '@/components/Problem'
+import HowItWorks from '@/components/HowItWorks'
+import Lifespan from '@/components/Lifespan'
+import Products from '@/components/Products'
+import Applications from '@/components/Applications'
+import Testimonials from '@/components/Testimonials'
+import FaqPreview from '@/components/FaqPreview'
+import CTABand from '@/components/CTABand'
 
+/* Halaman dibaca berurutan seperti lembar data:
+   posisi → kepatuhan → masalah → mekanisme → masa pakai →
+   katalog → penerapan → rekam jejak → tanya jawab → tindakan. */
 export default function HomePage() {
   return (
-    <main className="bg-white text-gray-800">
+    <>
       <Hero />
-
-      <section id="features" className="pt-10 pb-0 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Features />
-        </div>
-      </section>
-    </main>
+      <CertBar />
+      <Problem />
+      <HowItWorks />
+      <Lifespan />
+      <Products />
+      <Applications />
+      <Testimonials />
+      <FaqPreview />
+      <CTABand />
+    </>
   )
 }

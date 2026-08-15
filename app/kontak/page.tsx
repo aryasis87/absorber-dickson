@@ -1,472 +1,396 @@
-// app/kontak/page.tsx
 'use client'
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { 
-  Mail, Phone, MapPin, Clock, Send, Check, 
-  Facebook, Twitter, Instagram, Linkedin, Globe, ChevronDown 
-} from 'lucide-react';
+import { useState } from 'react'
+import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mail, Phone, MapPin, Clock, Send, Check, ArrowRight, Loader2 } from 'lucide-react'
+
+const kontak = [
+  {
+    icon: Phone,
+    label: 'Telepon',
+    value: '+62 812 3456 7890',
+    href: 'tel:+628123456789',
+    note: 'Jalur tercepat pada jam kerja',
+  },
+  {
+    icon: Mail,
+    label: 'Surel',
+    value: 'info@ethyleneabsorber.com',
+    href: 'mailto:info@ethyleneabsorber.com',
+    note: 'Dibalas dalam 1–2 jam kerja',
+  },
+  {
+    icon: MapPin,
+    label: 'Kantor',
+    value: 'Jl. Teknologi No. 123, Bandung 40234',
+    note: 'Kunjungan dengan janji temu',
+  },
+  {
+    icon: Clock,
+    label: 'Jam Kerja',
+    value: 'Sen–Jum 08.00–17.00',
+    note: 'Sabtu 08.00–12.00 · Minggu tutup',
+  },
+]
+
+const alurKerja = [
+  {
+    no: '01',
+    title: 'Formulir masuk',
+    desc: 'Permintaan tercatat beserta komoditas, volume ruang, dan rute yang Anda isikan.',
+  },
+  {
+    no: '02',
+    title: 'Perhitungan dosis',
+    desc: 'Tim teknis menyusun kebutuhan sachet berdasarkan volume dan laju pelepasan etilen komoditas Anda.',
+  },
+  {
+    no: '03',
+    title: 'Sample dikirim',
+    desc: 'Sample beserta lembar data dan salinan sertifikat dikirim untuk diuji di fasilitas Anda.',
+  },
+  {
+    no: '04',
+    title: 'Uji pembanding',
+    desc: 'Bandingkan satu peti berperlakuan dengan satu peti kontrol sebelum memutuskan pembelian.',
+  },
+]
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
+  const [form, setForm] = useState({
+    nama: '',
+    perusahaan: '',
     email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-  
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
+    telepon: '',
+    komoditas: '',
+    volume: '',
+    rute: '',
+    pesan: '',
+  })
+  const [mengirim, setMengirim] = useState(false)
+  const [terkirim, setTerkirim] = useState(false)
+
+  const ubah = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
+
+  const kirim = (e: React.FormEvent) => {
+    e.preventDefault()
+    setMengirim(true)
+    // Purwarupa desain — pengiriman disimulasikan, tanpa backend.
     setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 1500);
-  };
-  
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: 'Telepon',
-      details: '+62 812 3456 7890',
-      description: 'Hubungi kami selama jam kerja',
-      color: 'bg-blue-500'
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      details: 'info@ethyleneabsorber.com',
-      description: 'Respon dalam 1-2 jam kerja',
-      color: 'bg-red-500'
-    },
-    {
-      icon: MapPin,
-      title: 'Lokasi',
-      details: 'Jl. Teknologi No. 123, Bandung',
-      description: 'Indonesia 40234',
-      color: 'bg-green-500'
-    },
-    {
-      icon: Clock,
-      title: 'Jam Operasional',
-      details: 'Senin - Jumat: 08.00 - 17.00',
-      description: 'Sabtu: 08.00 - 12.00',
-      color: 'bg-purple-500'
-    }
-  ];
-  
-  const socialLinks = [
-    { icon: Facebook, url: "https://facebook.com", name: "Facebook" },
-    { icon: Twitter, url: "https://twitter.com", name: "Twitter" },
-    { icon: Instagram, url: "https://instagram.com", name: "Instagram" },
-    { icon: Linkedin, url: "https://linkedin.com", name: "LinkedIn" }
-  ];
+      setMengirim(false)
+      setTerkirim(true)
+    }, 1200)
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f1f9f0] to-white">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#0d3b26] to-[#1a4d32] text-white">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern.svg')] bg-repeat opacity-10"></div>
-          <div className="absolute top-20 -right-20 w-96 h-96 rounded-full bg-[#55A630]/20 blur-3xl"></div>
-          <div className="absolute bottom-10 -left-20 w-80 h-80 rounded-full bg-[#8CCF42]/20 blur-3xl"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 py-24 md:py-32 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <motion.div
-                className="inline-flex items-center bg-[#55A630] px-4 py-1.5 rounded-full mb-6"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Mail size={18} className="mr-2" />
-                <span className="font-medium">Hubungi Kami</span>
-              </motion.div>
-              
-              <motion.h1
-                className="text-4xl md:text-5xl font-bold mb-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                <span className="block">Kami Siap Membantu</span>
-                <span className="block bg-clip-text text-transparent bg-gradient-to-r from-[#8CCF42] to-[#C8EE9E]">
-                  Pertanyaan Anda
+    <div className="bg-white">
+      {/* ------------------------------------------------------------------ */}
+      {/* Kop dokumen + formulir                                              */}
+      {/* ------------------------------------------------------------------ */}
+      <header className="relative overflow-hidden bg-ink text-white">
+        <div aria-hidden="true" className="bp-grid-dark absolute inset-0" />
+        <div
+          aria-hidden="true"
+          className="hatch hatch-lime absolute inset-y-0 right-0 w-1/4"
+          style={{ clipPath: 'polygon(45% 0, 100% 0, 100% 100%, 0 100%)' }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pt-36 pb-20 md:pt-44 md:pb-24 lg:px-10">
+          <div className="grid items-start gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-20">
+            <div className="lg:pt-4">
+              <p className="mb-6 flex items-center gap-3">
+                <span className="tech inline-flex h-[1.375rem] items-center justify-center border border-lime/45 px-1.5 text-[0.6875rem] font-semibold text-lime">
+                  08
                 </span>
-              </motion.h1>
-              
-              <motion.p
-                className="text-xl text-gray-200 mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                Tim dukungan pelanggan kami siap membantu Anda. Hubungi kami melalui formulir di samping atau informasi kontak di bawah ini.
-              </motion.p>
-              
-              <motion.div
-                className="flex flex-wrap gap-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#55A630] transition-colors"
-                    whileHover={{ y: -5, scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <social.icon className="text-gray-300 hover:text-white" size={20} />
-                  </motion.a>
+                <span aria-hidden="true" className="h-px w-7 bg-lime/45" />
+                <span className="tech-label font-semibold text-lime">Permintaan Sample</span>
+              </p>
+
+              <h1 className="text-[2.25rem] leading-[1.08] font-extrabold sm:text-5xl lg:text-[3.1rem]">
+                Sebutkan muatannya.
+                <br />
+                <span className="text-lime">Kami hitung dosisnya.</span>
+              </h1>
+
+              <p className="mt-6 max-w-lg leading-relaxed text-white/72">
+                Kami tidak menjual berdasarkan perkiraan. Isi komoditas, volume ruang, dan rute
+                distribusi Anda — tim teknis mengembalikan perhitungan kebutuhan sachet beserta
+                sample untuk diuji sendiri.
+              </p>
+
+              {/* Alur kerja setelah formulir dikirim */}
+              <ol className="mt-12 border-t border-white/15">
+                {alurKerja.map((s) => (
+                  <li key={s.no} className="flex gap-5 border-b border-white/15 py-5">
+                    <span className="tech shrink-0 pt-0.5 text-[0.6875rem] font-semibold text-lime">
+                      {s.no}
+                    </span>
+                    <div>
+                      <p className="text-sm font-bold text-white">{s.title}</p>
+                      <p className="mt-1 text-[0.8125rem] leading-relaxed text-white/62">
+                        {s.desc}
+                      </p>
+                    </div>
+                  </li>
                 ))}
-              </motion.div>
-            </motion.div>
-            
-            <motion.div
-              className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <h2 className="text-2xl font-bold mb-6 text-white">Kirim Pesan</h2>
-              
-              {submitSuccess ? (
-                <motion.div
-                  className="bg-green-50 border border-green-200 rounded-xl p-6 text-center"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
-                    <Check className="text-green-600" size={32} />
-                  </div>
-                  <h3 className="text-xl font-semibold text-green-800 mb-2">Pesan Terkirim!</h3>
-                  <p className="text-green-700">
-                    Terima kasih telah menghubungi kami. Tim kami akan segera merespons pesan Anda.
-                  </p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="name" className="block text-gray-200 mb-2">Nama Lengkap</label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#8CCF42] text-white placeholder-white/50"
-                        placeholder="Masukkan nama Anda"
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="email" className="block text-gray-200 mb-2">Email</label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#8CCF42] text-white placeholder-white/50"
-                          placeholder="email@contoh.com"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="phone" className="block text-gray-200 mb-2">Telepon</label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#8CCF42] text-white placeholder-white/50"
-                          placeholder="+62 812 3456 7890"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="subject" className="block text-gray-200 mb-2">Subjek</label>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        required
-                        value={formData.subject}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#8CCF42] text-white placeholder-white/50"
-                        placeholder="Subjek pesan Anda"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="message" className="block text-gray-200 mb-2">Pesan</label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        required
-                        rows={5}
-                        value={formData.message}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-[#8CCF42] text-white placeholder-white/50"
-                        placeholder="Tulis pesan Anda..."
-                      ></textarea>
-                    </div>
-                    
-                    <motion.button
-                      type="submit"
-                      className={`w-full flex items-center justify-center gap-2 py-4 px-6 rounded-xl font-semibold transition-all ${
-                        isSubmitting 
-                          ? 'bg-gray-400 cursor-not-allowed' 
-                          : 'bg-gradient-to-r from-[#55A630] to-[#8CCF42] hover:shadow-lg'
-                      }`}
-                      disabled={isSubmitting}
-                      whileHover={!isSubmitting ? { scale: 1.02 } : {}}
-                      whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+              </ol>
+            </div>
+
+            {/* Formulir */}
+            <div className="corner-frame bg-white p-6 shadow-2xl sm:p-9">
+              <div className="mb-7 flex items-baseline justify-between border-b border-ink/12 pb-5">
+                <h2 className="text-lg font-extrabold text-ink">Formulir Permintaan</h2>
+                <span className="tech-label text-slate-400">Form EA-01</span>
+              </div>
+
+              <AnimatePresence mode="wait">
+                {terkirim ? (
+                  <motion.div
+                    key="sukses"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="py-10 text-center"
+                  >
+                    <span className="mx-auto mb-6 flex h-16 w-16 items-center justify-center bg-brand text-white">
+                      <Check size={30} strokeWidth={2.5} />
+                    </span>
+                    <h3 className="mb-3 text-xl font-extrabold text-ink">Permintaan tercatat</h3>
+                    <p className="mx-auto max-w-sm text-sm leading-relaxed text-slate-600">
+                      Terima kasih. Tim teknis meninjau data muatan Anda dan menghubungi kembali
+                      pada jam kerja berikutnya, umumnya dalam 48 jam.
+                    </p>
+                    <button
+                      onClick={() => setTerkirim(false)}
+                      className="tech-label mt-8 border border-ink/20 px-5 py-2.5 font-semibold text-ink transition-colors hover:border-brand hover:text-brand"
                     >
-                      {isSubmitting ? (
+                      Isi permintaan lain
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    onSubmit={kirim}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="space-y-5"
+                  >
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <Field
+                        label="Nama lengkap"
+                        name="nama"
+                        value={form.nama}
+                        onChange={ubah}
+                        placeholder="Nama Anda"
+                        required
+                      />
+                      <Field
+                        label="Perusahaan"
+                        name="perusahaan"
+                        value={form.perusahaan}
+                        onChange={ubah}
+                        placeholder="Nama perusahaan"
+                        required
+                      />
+                      <Field
+                        label="Surel"
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={ubah}
+                        placeholder="nama@perusahaan.com"
+                        required
+                      />
+                      <Field
+                        label="Telepon"
+                        name="telepon"
+                        type="tel"
+                        value={form.telepon}
+                        onChange={ubah}
+                        placeholder="+62 …"
+                        required
+                      />
+                    </div>
+
+                    <div className="border-t border-ink/12 pt-5">
+                      <p className="tech-label mb-4 font-semibold text-brand">Data muatan</p>
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <Field
+                          label="Komoditas"
+                          name="komoditas"
+                          value={form.komoditas}
+                          onChange={ubah}
+                          placeholder="Mis. manggis, pisang"
+                          required
+                        />
+                        <Field
+                          label="Volume ruang (m³)"
+                          name="volume"
+                          type="number"
+                          min="1"
+                          value={form.volume}
+                          onChange={ubah}
+                          placeholder="Mis. 33"
+                          hint="Kontainer 20 ft ±33 m³ · 40 ft ±67 m³"
+                          required
+                        />
+                      </div>
+                      <div className="mt-5">
+                        <Field
+                          label="Rute distribusi"
+                          name="rute"
+                          value={form.rute}
+                          onChange={ubah}
+                          placeholder="Mis. Surabaya → Yokohama, laut 3 minggu"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="border-t border-ink/12 pt-5">
+                      <label
+                        htmlFor="pesan"
+                        className="tech-label mb-2.5 block font-semibold text-slate-500"
+                      >
+                        Catatan tambahan
+                      </label>
+                      <textarea
+                        id="pesan"
+                        name="pesan"
+                        rows={4}
+                        value={form.pesan}
+                        onChange={ubah}
+                        placeholder="Kendala yang pernah dialami, target masa simpan, atau dokumen yang Anda perlukan."
+                        className="w-full resize-y border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={mengirim}
+                      className="flex w-full items-center justify-center gap-2 rounded-sm bg-brand py-4 text-sm font-bold text-white transition-colors duration-300 hover:bg-brand-deep disabled:opacity-70"
+                    >
+                      {mengirim ? (
                         <>
-                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Mengirim...</span>
+                          <Loader2 size={16} className="animate-spin" strokeWidth={2.5} />
+                          Mengirim…
                         </>
                       ) : (
                         <>
-                          <Send size={20} />
-                          <span>Kirim Pesan</span>
+                          <Send size={16} strokeWidth={2.5} />
+                          Kirim Permintaan Sample
                         </>
                       )}
-                    </motion.button>
-                  </div>
-                </form>
-              )}
-            </motion.div>
+                    </button>
+
+                    <p className="tech-label leading-[1.6] text-slate-400">
+                      Purwarupa desain — pengiriman formulir disimulasikan dan data tidak tersimpan.
+                    </p>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Contact Info Section */}
-      <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-        <div className="text-center mb-16">
-          <motion.div
-            className="inline-flex items-center bg-[#55A630] px-4 py-1.5 rounded-full mb-6"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <MapPin size={18} className="mr-2 text-white" />
-            <span className="font-medium text-white">Informasi Kontak</span>
-          </motion.div>
-          
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            Hubungi Kami Melalui <span className="text-[#55A630]">Berbagai Cara</span>
-          </motion.h2>
-          
-          <motion.p
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            Kami siap membantu Anda melalui berbagai saluran komunikasi. Pilih cara yang paling nyaman untuk Anda.
-          </motion.p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {contactInfo.map((item, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + index * 0.1 }}
-              whileHover={{ y: -10 }}
+      </header>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Register kontak                                                     */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="relative overflow-hidden bg-paper py-20 md:py-28">
+        <div aria-hidden="true" className="bp-grid absolute inset-0" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
+          <h2 className="tech-label mb-8 border-b-2 border-ink/12 pb-4 font-semibold text-ink">
+            Tabel 02 — Saluran kontak
+          </h2>
+
+          <dl className="grid gap-px bg-ink/12 sm:grid-cols-2 lg:grid-cols-4">
+            {kontak.map((k) => (
+              <div key={k.label} className="bg-white p-7">
+                <span className="mb-5 flex h-11 w-11 items-center justify-center bg-brand/12 text-brand">
+                  <k.icon size={19} strokeWidth={2} />
+                </span>
+                <dt className="tech-label mb-2 font-semibold text-slate-400">{k.label}</dt>
+                <dd className="text-sm leading-snug font-bold text-ink">
+                  {k.href ? (
+                    <a href={k.href} className="transition-colors hover:text-brand">
+                      {k.value}
+                    </a>
+                  ) : (
+                    k.value
+                  )}
+                </dd>
+                <dd className="mt-2 text-[0.8125rem] leading-relaxed text-slate-500">{k.note}</dd>
+              </div>
+            ))}
+          </dl>
+
+          {/* Arahan sebelum menghubungi */}
+          <div className="mt-12 flex flex-col gap-6 border-l-2 border-brand bg-white px-8 py-7 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="tech-label mb-2.5 font-semibold text-brand">Sebelum menghubungi</p>
+              <p className="text-sm leading-relaxed text-slate-700">
+                Pertanyaan soal dosis, masa efektif, keamanan pangan, dan dokumen ekspor sudah
+                terjawab lengkap beserta angkanya di lembar tanya jawab teknis.
+              </p>
+            </div>
+            <Link
+              href="/faq"
+              className="inline-flex shrink-0 items-center gap-2 text-sm font-bold text-brand underline-offset-4 hover:underline"
             >
-              <div className={`h-2 ${item.color}`}></div>
-              <div className="p-6">
-                <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center mb-4`}>
-                  <item.icon className="text-white" size={20} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-lg font-medium text-gray-800 mb-2">{item.details}</p>
-                <p className="text-gray-600">{item.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Map Section */}
-      <div className="max-w-7xl mx-auto px-4 pb-16">
-        <div className="bg-gradient-to-r from-[#0d3b26] to-[#1a4d32] rounded-3xl overflow-hidden shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            <div className="p-8 md:p-12 lg:p-16 text-white">
-              <motion.div
-                className="inline-flex items-center bg-[#55A630] px-4 py-1.5 rounded-full mb-6"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <MapPin size={18} className="mr-2" />
-                <span className="font-medium">Lokasi Kami</span>
-              </motion.div>
-              
-              <motion.h2
-                className="text-3xl md:text-4xl font-bold mb-6"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                Kunjungi Kantor Kami
-              </motion.h2>
-              
-              <motion.p
-                className="text-xl text-gray-200 mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                Kami berada di lokasi strategis di Bandung, Indonesia. Silakan kunjungi kantor kami selama jam kerja untuk konsultasi langsung.
-              </motion.p>
-              
-              <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <div className="flex items-start gap-4">
-                  <MapPin className="text-[#8CCF42] mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold text-lg">Alamat</h3>
-                    <p>Jl. Teknologi No. 123, Gedung Inovasi Lt. 5, Bandung, Indonesia 40234</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <Clock className="text-[#8CCF42] mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold text-lg">Jam Operasional</h3>
-                    <p>Senin - Jumat: 08.00 - 17.00 WIB</p>
-                    <p>Sabtu: 08.00 - 12.00 WIB</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <Globe className="text-[#8CCF42] mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold text-lg">Navigasi</h3>
-                    <p>Koordinat: -6.917464, 107.619125</p>
-                    <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="text-[#8CCF42] hover:underline">Petunjuk arah di Google Maps</a>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-            
-            <motion.div
-              className="bg-gray-200 h-96 lg:h-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              {/* Placeholder for Map */}
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#55A630] to-[#8CCF42]">
-                <div className="text-center p-6 text-white">
-                  <div className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center mx-auto mb-4">
-                    <MapPin size={32} />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">Lokasi Kami</h3>
-                  <p>Jl. Teknologi No. 123, Bandung</p>
-                  <p className="mt-4 text-sm opacity-80">Peta interaktif akan ditampilkan di sini</p>
-                </div>
-              </div>
-            </motion.div>
+              Buka lembar tanya jawab
+              <ArrowRight size={15} strokeWidth={2.5} />
+            </Link>
           </div>
         </div>
-      </div>
-      
-      {/* FAQ Mini Section */}
-      <div className="max-w-5xl mx-auto px-4 pb-24">
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
-          <div className="p-8 border-b border-gray-100">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Pertanyaan Umum</h3>
-            <p className="text-gray-600">Temukan jawaban untuk pertanyaan yang sering diajukan terkait kontak kami</p>
-          </div>
-          
-          <div className="divide-y divide-gray-100">
-            <div className="py-6 px-8">
-              <button className="flex items-center justify-between w-full text-left">
-                <h3 className="text-lg font-semibold text-gray-800 pr-4">
-                  Berapa lama waktu respon untuk email?
-                </h3>
-                <ChevronDown className="text-[#55A630]" size={24} />
-              </button>
-              <div className="pt-4 pb-2 text-gray-600">
-                Kami berusaha merespons semua email dalam waktu 1-2 jam kerja pada hari kerja. Untuk permintaan di akhir pekan, respons akan diberikan pada hari kerja berikutnya.
-              </div>
-            </div>
-            
-            <div className="py-6 px-8">
-              <button className="flex items-center justify-between w-full text-left">
-                <h3 className="text-lg font-semibold text-gray-800 pr-4">
-                  Apakah saya perlu membuat janji sebelum datang ke kantor?
-                </h3>
-                <ChevronDown className="text-[#55A630]" size={24} />
-              </button>
-              <div className="pt-4 pb-2 text-gray-600">
-                Meskipun tidak wajib, kami sangat menyarankan untuk membuat janji terlebih dahulu. Ini memastikan bahwa staf yang tepat akan tersedia untuk membantu Anda. Anda dapat membuat janji melalui telepon atau formulir kontak di atas.
-              </div>
-            </div>
-            
-            <div className="py-6 px-8">
-              <button className="flex items-center justify-between w-full text-left">
-                <h3 className="text-lg font-semibold text-gray-800 pr-4">
-                  Apakah ada layanan dukungan 24/7?
-                </h3>
-                <ChevronDown className="text-[#55A630]" size={24} />
-              </button>
-              <div className="pt-4 pb-2 text-gray-600">
-                Untuk dukungan teknis darurat, kami menyediakan layanan 24/7 melalui hotline khusus: +62 812 3456 7891. Untuk pertanyaan non-darurat, silakan gunakan saluran reguler.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
-  );
+  )
+}
+
+/* Satu gaya isian untuk seluruh formulir. */
+function Field({
+  label,
+  name,
+  value,
+  onChange,
+  placeholder,
+  type = 'text',
+  required = false,
+  hint,
+  min,
+}: {
+  label: string
+  name: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  placeholder?: string
+  type?: string
+  required?: boolean
+  hint?: string
+  min?: string
+}) {
+  return (
+    <div>
+      <label htmlFor={name} className="tech-label mb-2.5 block font-semibold text-slate-500">
+        {label}
+        {required && <span className="ml-1 text-brand">*</span>}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        min={min}
+        required={required}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none"
+      />
+      {hint && <p className="tech-label mt-2 leading-[1.5] text-slate-400">{hint}</p>}
+    </div>
+  )
 }

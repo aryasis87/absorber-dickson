@@ -1,218 +1,216 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
-import { Menu, X, ShoppingBag, Phone, ChevronDown } from 'lucide-react'
+import { Menu, X, Phone, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+const NAV = [
+  { label: 'Beranda', href: '/' },
+  { label: 'Masalah', href: '/#masalah' },
+  { label: 'Cara Kerja', href: '/#cara-kerja' },
+  { label: 'Masa Pakai', href: '/#masa-pakai' },
+  { label: 'Produk', href: '/#produk' },
+  { label: 'Penerapan', href: '/#penerapan' },
+  { label: 'FAQ', href: '/faq' },
+]
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [productsOpen, setProductsOpen] = useState(false)
-  const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10)
-    const handleClickOutside = (e: MouseEvent) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target as Node)) {
-        setIsOpen(false)
-      }
-    }
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-    window.addEventListener('scroll', handleScroll)
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-
+  // Kunci scroll & tutup dengan Escape saat laci mobile terbuka
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false)
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.body.style.overflow = 'auto'
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
     }
   }, [isOpen])
 
+  // Tutup laci ketika rute berganti
+  useEffect(() => setIsOpen(false), [pathname])
+
   return (
-    <header className={`fixed top-0 w-full z-50 backdrop-blur-md transition-all ${scrolled ? 'bg-white/90 shadow-sm' : 'bg-white/70'}`}>
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-[#55A630] to-[#8CCF42] rounded-lg flex items-center justify-center">
-            <LeafIcon className="text-white" />
-          </div>
-          <span className="text-xl font-bold text-[#55A630]">
-            Ethylene<span className="font-light">Absorber</span>
-          </span>
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6">
-          <NavLink href="/">Beranda</NavLink>
-          
-          <div className="relative" 
-            onMouseEnter={() => setProductsOpen(true)}
-            onMouseLeave={() => setProductsOpen(false)}>
-            <button className="flex items-center gap-1">
-              Produk <ChevronDown size={16} className={`transition ${productsOpen ? 'rotate-180' : ''}`} />
-            </button>
-            
-            <AnimatePresence>
-              {productsOpen && (
-                <motion.div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}>
-                  <ProductItem href="/#features" icon={<ShoppingBag size={18} />} title="Ethylene Absorber" />
-                  <ProductItem href="/#features" icon={<PackageIcon />} title="Kemasan Buah" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          <NavLink href="#features">Manfaat</NavLink>
-          <NavLink href="/faq">FAQ</NavLink>
-          <NavLink href="/kontak">Kontak</NavLink>
-          
-          <Link href="/kontak" className="flex items-center gap-2 bg-gradient-to-r from-[#55A630] to-[#8CCF42] text-white px-4 py-2 rounded-full ml-2">
-            <Phone size={16} /> Hubungi Kami
-          </Link>
-        </nav>
-
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden p-2 z-50"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <>
-              {/* Overlay */}
-              <motion.div 
-                className="fixed inset-0 bg-black/50 z-40 md:hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsOpen(false)}
-              />
-              
-              {/* Menu Panel */}
-              <motion.div 
-                ref={mobileMenuRef}
-                className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white z-50 shadow-xl md:hidden"
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ type: 'tween', ease: 'easeInOut' }}
-              >
-                <div className="h-full flex flex-col">
-                  {/* Menu Header with Close Button */}
-                  <div className="flex justify-between items-center p-4 border-b">
-                    <h3 className="text-lg font-semibold">Menu</h3>
-                    <button 
-                      onClick={() => setIsOpen(false)}
-                      className="p-2 rounded-full hover:bg-gray-100"
-                      aria-label="Close menu"
-                    >
-                      <X size={20} />
-                    </button>
-                  </div>
-                  
-                  {/* Menu Content */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-2">
-                    <MobileLink href="/" onClick={() => setIsOpen(false)}>Beranda</MobileLink>
-                    
-                    <div className="border-b py-2">
-                      <button 
-                        className="flex justify-between items-center w-full py-3"
-                        onClick={() => setProductsOpen(!productsOpen)}
-                      >
-                        Produk <ChevronDown size={20} className={`transition ${productsOpen ? 'rotate-180' : ''}`} />
-                      </button>
-                      
-                      {productsOpen && (
-                        <div className="pl-4 space-y-2 mt-2">
-                          <MobileLink href="/#features" onClick={() => setIsOpen(false)}>Ethylene Absorber</MobileLink>
-                          <MobileLink href="/#features" onClick={() => setIsOpen(false)}>Kemasan Buah</MobileLink>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <MobileLink href="#features" onClick={() => setIsOpen(false)}>Manfaat</MobileLink>
-                    <MobileLink href="/faq" onClick={() => setIsOpen(false)}>FAQ</MobileLink>
-                    <MobileLink href="/kontak" onClick={() => setIsOpen(false)}>Kontak</MobileLink>
-                  </div>
-                  
-                  {/* Menu Footer */}
-                  <div className="p-4 border-t">
-                    <Link 
-                      href="/kontak" 
-                      className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#55A630] to-[#8CCF42] text-white py-3 px-6 rounded-full"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Phone size={18} />
-                      Hubungi Kami
-                    </Link>
-                  </div>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+    <header className="fixed top-0 z-50 w-full">
+      {/* Kop dokumen — nomor registrasi selalu terlihat, ini inti konsep korporat */}
+      <div
+        className={`hidden overflow-hidden bg-ink text-white/70 transition-[height,opacity] duration-300 md:block ${
+          scrolled ? 'h-0 opacity-0' : 'h-9 opacity-100'
+        }`}
+      >
+        <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-6 lg:px-10">
+          <p className="tech-label flex items-center gap-2.5">
+            <span className="text-lime">REG. BPOM RI</span>
+            <span className="text-white/85">NA18191100273</span>
+            <span aria-hidden="true" className="h-3 w-px bg-white/20" />
+            <span>FDA 21 CFR 175.300</span>
+            <span aria-hidden="true" className="h-3 w-px bg-white/20" />
+            <span>EU No 10/2011</span>
+          </p>
+          <a
+            href="tel:+628123456789"
+            className="tech-label flex items-center gap-2 transition-colors hover:text-lime"
+          >
+            <Phone size={12} strokeWidth={2.5} />
+            +62 812 3456 7890
+          </a>
+        </div>
       </div>
+
+      {/* Baris navigasi utama */}
+      <div
+        className={`border-b transition-all duration-300 ${
+          scrolled
+            ? 'border-ink/10 bg-white/92 shadow-[0_1px_20px_rgba(0,60,92,0.07)] backdrop-blur-md'
+            : 'border-transparent bg-white/85 backdrop-blur-sm'
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5 lg:px-10">
+          <Link href="/" className="flex items-center gap-3" aria-label="EthyleneAbsorber — beranda">
+            <BondMark />
+            <span className="leading-none">
+              <span className="block text-[1.0625rem] font-extrabold tracking-tight text-ink">
+                Ethylene<span className="font-normal text-brand">Absorber</span>
+              </span>
+              <span className="tech-label mt-1 block text-[0.5625rem] text-slate-400">
+                PT Dickson Synergy
+              </span>
+            </span>
+          </Link>
+
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigasi utama">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group relative px-3 py-2 text-[0.8125rem] font-semibold text-slate-600 transition-colors hover:text-ink"
+              >
+                {item.label}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-3 bottom-1 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-300 group-hover:scale-x-100"
+                />
+              </Link>
+            ))}
+            <Link
+              href="/kontak"
+              className="ml-3 inline-flex items-center gap-2 rounded-sm bg-brand px-5 py-2.5 text-[0.8125rem] font-bold text-white transition-colors duration-300 hover:bg-brand-deep"
+            >
+              Minta Sample
+              <ArrowRight size={14} strokeWidth={2.5} />
+            </Link>
+          </nav>
+
+          <button
+            className="-mr-2 p-2 text-ink lg:hidden"
+            onClick={() => setIsOpen(true)}
+            aria-label="Buka menu"
+            aria-expanded={isOpen}
+          >
+            <Menu size={22} />
+          </button>
+        </div>
+        {/* Rel penggaris tipis — motif ukur yang mengikat seluruh halaman */}
+        <div aria-hidden="true" className="tick-rail -mb-px h-1 text-ink opacity-20" />
+      </div>
+
+      {/* Laci mobile */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              ref={panelRef}
+              className="fixed top-0 right-0 z-50 flex h-full w-[86%] max-w-sm flex-col bg-white shadow-2xl lg:hidden"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', ease: [0.22, 1, 0.36, 1], duration: 0.35 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu navigasi"
+            >
+              <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
+                <span className="tech-label font-semibold text-slate-400">Daftar Isi</span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="-mr-2 p-2 text-ink"
+                  aria-label="Tutup menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <nav className="flex-1 overflow-y-auto px-6 py-2" aria-label="Navigasi mobile">
+                {NAV.map((item, i) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-baseline gap-4 border-b border-ink/8 py-4 text-base font-bold text-ink transition-colors hover:text-brand"
+                  >
+                    <span className="tech text-[0.6875rem] font-semibold text-brand">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="border-t border-ink/10 p-6">
+                <Link
+                  href="/kontak"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-sm bg-brand py-3.5 text-sm font-bold text-white"
+                >
+                  Minta Sample Gratis
+                  <ArrowRight size={16} strokeWidth={2.5} />
+                </Link>
+                <p className="tech-label mt-4 text-center text-slate-400">
+                  REG. BPOM RI NA18191100273
+                </p>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   )
 }
 
-// Reusable Components
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <Link href={href} className="relative px-3 py-2 hover:text-[#55A630] transition">
-    {children}
-    <span className="absolute bottom-0 left-1/2 h-0.5 bg-[#55A630] w-0 hover:w-3/4 -translate-x-1/2 transition-all duration-300" />
-  </Link>
-)
-
-const MobileLink = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => (
-  <Link 
-    href={href} 
-    onClick={onClick} 
-    className="block py-3 px-4 rounded-lg hover:bg-gray-100 transition"
-  >
-    {children}
-  </Link>
-)
-
-const ProductItem = ({ href, icon, title }: { href: string; icon: React.ReactNode; title: string }) => (
-  <Link href={href} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 rounded-lg">
-    <span className="text-[#55A630]">{icon}</span>
-    <span>{title}</span>
-  </Link>
-)
-
-// Icons (same as before)
-function LeafIcon(props: React.SVGProps<SVGSVGElement>) {
+/** Lambang: ikatan rangkap C=C pada molekul etilena, dibingkai potongan diagonal. */
+function BondMark() {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-    </svg>
-  )
-}
-
-function PackageIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m7.5 4.27 9 5.15" />
-      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-      <path d="m3.3 7 8.7 5 8.7-5" />
-      <path d="M12 22V12" />
-    </svg>
+    <span
+      className="relative flex h-10 w-10 shrink-0 items-center justify-center bg-ink"
+      style={{ clipPath: 'polygon(0 0, 100% 0, 100% 72%, 78% 100%, 0 100%)' }}
+      aria-hidden="true"
+    >
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+        <circle cx="4" cy="7" r="2.6" fill="#8CCF42" />
+        <circle cx="18" cy="7" r="2.6" fill="#8CCF42" />
+        <path d="M5.6 5.2h10.8M5.6 8.8h10.8" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    </span>
   )
 }

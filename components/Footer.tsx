@@ -1,239 +1,176 @@
-'use client'
-
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { 
-  Phone, Mail, MapPin, 
-  Facebook, Twitter, Instagram, Linkedin 
-} from 'lucide-react'
+import { Phone, Mail, MapPin, Clock } from 'lucide-react'
+
+const navigasi = [
+  { label: 'Beranda', href: '/' },
+  { label: 'Latar Masalah', href: '/#masalah' },
+  { label: 'Cara Kerja', href: '/#cara-kerja' },
+  { label: 'Masa Pakai', href: '/#masa-pakai' },
+  { label: 'Katalog Produk', href: '/#produk' },
+  { label: 'Penerapan', href: '/#penerapan' },
+  { label: 'Pertanyaan Umum', href: '/faq' },
+  { label: 'Hubungi Kami', href: '/kontak' },
+]
+
+const standar = [
+  ['BPOM RI', 'NA18191100273'],
+  ['FDA', '21 CFR 175.300'],
+  ['Uni Eropa', 'EU No 10/2011'],
+  ['JHOSPA', 'Jepang'],
+  ['Keberlanjutan', 'EcoTain®'],
+]
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
-  
+  const tahun = new Date().getFullYear()
+
   return (
-    <motion.footer 
-      className="bg-[#0a2e1d] text-gray-300"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      {/* Decorative top gradient */}
-      <div className="h-1 bg-gradient-to-r from-[#55A630] via-[#8CCF42] to-[#55A630]"></div>
-      
-      {/* Main footer content */}
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Brand info */}
+    <footer className="relative overflow-hidden bg-ink-deep text-white/70">
+      <div aria-hidden="true" className="bp-grid-dark absolute inset-0" />
+      <div aria-hidden="true" className="tick-rail absolute inset-x-0 top-0 h-2.5 text-lime" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-10 lg:px-10">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)_minmax(0,0.9fr)_minmax(0,1.1fr)]">
+          {/* Kop perusahaan */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-[#55A630] to-[#8CCF42] rounded-lg flex items-center justify-center">
-                <div className="text-white">
-                  <LeafIcon />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold text-white">
-                Ethylene<span className="font-light">Absorber</span>
-              </h3>
+            <div className="mb-6 flex items-center gap-3">
+              <span
+                className="flex h-10 w-10 shrink-0 items-center justify-center bg-white/10"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 72%, 78% 100%, 0 100%)' }}
+                aria-hidden="true"
+              >
+                <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+                  <circle cx="4" cy="7" r="2.6" fill="#8CCF42" />
+                  <circle cx="18" cy="7" r="2.6" fill="#8CCF42" />
+                  <path
+                    d="M5.6 5.2h10.8M5.6 8.8h10.8"
+                    stroke="#ffffff"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              <span className="leading-none">
+                <span className="block text-[1.0625rem] font-extrabold tracking-tight text-white">
+                  Ethylene<span className="font-normal text-lime">Absorber</span>
+                </span>
+                <span className="tech-label mt-1 block text-[0.5625rem] text-white/45">
+                  PT Dickson Synergy
+                </span>
+              </span>
             </div>
-            
-            <p className="mb-6 text-gray-400 max-w-xs">
-              Solusi terdepan untuk menjaga kesegaran buah selama distribusi dan ekspor dengan teknologi ethylene absorber.
+
+            <p className="mb-7 max-w-xs text-sm leading-relaxed text-white/60">
+              Pemasok ethylene absorber, silica gel, dan desiccant untuk industri pangan segar,
+              manufaktur, dan ekspor di Indonesia.
             </p>
-            
-            <div className="flex gap-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#1e3d2c] flex items-center justify-center hover:bg-[#55A630] transition-colors"
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <social.icon className="text-gray-300 hover:text-white" size={18} />
-                </motion.a>
-              ))}
-            </div>
+
+            <p className="tech-label leading-[1.7] text-white/40">
+              Reg. BPOM RI
+              <span className="mt-1 block text-lime">NA18191100273</span>
+            </p>
           </div>
-          
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-bold text-white mb-6 pb-2 border-b border-[#55A630]/30">
-              Tautan Cepat
-            </h4>
+
+          {/* Navigasi */}
+          <nav aria-label="Navigasi footer">
+            <h2 className="tech-label mb-5 border-b border-white/15 pb-3 font-semibold text-white">
+              Navigasi
+            </h2>
             <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <motion.li 
-                  key={index}
-                  whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Link 
-                    href={link.href} 
-                    className="flex items-center gap-2 hover:text-[#8CCF42] transition-colors"
+              {navigasi.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-sm transition-colors hover:text-lime"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#55A630]"></div>
-                    {link.label}
+                    {l.label}
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </div>
-          
-          {/* Products */}
+          </nav>
+
+          {/* Register standar */}
           <div>
-            <h4 className="text-lg font-bold text-white mb-6 pb-2 border-b border-[#55A630]/30">
-              Produk Kami
-            </h4>
-            <ul className="space-y-3">
-              {products.map((product, index) => (
-                <motion.li 
-                  key={index}
-                  whileHover={{ x: 5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Link 
-                    href={product.href} 
-                    className="flex items-center gap-2 hover:text-[#8CCF42] transition-colors"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#55A630]"></div>
-                    {product.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-bold text-white mb-6 pb-2 border-b border-[#55A630]/30">
-              Hubungi Kami
-            </h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="mt-1 text-[#55A630]">
-                  <Phone size={18} />
+            <h2 className="tech-label mb-5 border-b border-white/15 pb-3 font-semibold text-white">
+              Standar
+            </h2>
+            <dl className="space-y-3.5">
+              {standar.map(([k, v]) => (
+                <div key={k}>
+                  <dt className="text-sm text-white/70">{k}</dt>
+                  <dd className="tech mt-0.5 text-[0.75rem] text-white/45">{v}</dd>
                 </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* Kontak */}
+          <div>
+            <h2 className="tech-label mb-5 border-b border-white/15 pb-3 font-semibold text-white">
+              Hubungi
+            </h2>
+            <ul className="space-y-5">
+              <li className="flex gap-3.5">
+                <Phone size={16} className="mt-0.5 shrink-0 text-lime" strokeWidth={2} />
                 <div>
-                  <div className="font-medium">Telepon</div>
-                  <a href="tel:+628123456789" className="hover:text-[#8CCF42] transition-colors">
+                  <span className="tech-label block text-white/40">Telepon</span>
+                  <a
+                    href="tel:+628123456789"
+                    className="text-sm transition-colors hover:text-lime"
+                  >
                     +62 812 3456 7890
                   </a>
                 </div>
               </li>
-              
-              <li className="flex items-start gap-3">
-                <div className="mt-1 text-[#55A630]">
-                  <Mail size={18} />
-                </div>
+              <li className="flex gap-3.5">
+                <Mail size={16} className="mt-0.5 shrink-0 text-lime" strokeWidth={2} />
                 <div>
-                  <div className="font-medium">Email</div>
-                  <a href="mailto:info@ethyleneabsorber.com" className="hover:text-[#8CCF42] transition-colors">
+                  <span className="tech-label block text-white/40">Surel</span>
+                  <a
+                    href="mailto:info@ethyleneabsorber.com"
+                    className="text-sm break-all transition-colors hover:text-lime"
+                  >
                     info@ethyleneabsorber.com
                   </a>
                 </div>
               </li>
-              
-              <li className="flex items-start gap-3">
-                <div className="mt-1 text-[#55A630]">
-                  <MapPin size={18} />
-                </div>
+              <li className="flex gap-3.5">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-lime" strokeWidth={2} />
                 <div>
-                  <div className="font-medium">Alamat</div>
-                  <div>Jl. Teknologi No. 123, Bandung, Indonesia 40234</div>
+                  <span className="tech-label block text-white/40">Alamat</span>
+                  <span className="text-sm leading-relaxed">
+                    Jl. Teknologi No. 123, Bandung, Indonesia 40234
+                  </span>
+                </div>
+              </li>
+              <li className="flex gap-3.5">
+                <Clock size={16} className="mt-0.5 shrink-0 text-lime" strokeWidth={2} />
+                <div>
+                  <span className="tech-label block text-white/40">Jam Kerja</span>
+                  <span className="text-sm leading-relaxed">
+                    Sen–Jum 08.00–17.00 · Sab 08.00–12.00
+                  </span>
                 </div>
               </li>
             </ul>
           </div>
         </div>
-        
-        {/* Newsletter */}
-        <motion.div 
-          className="mt-16 p-6 rounded-xl bg-gradient-to-r from-[#0d3b26] to-[#1a4d32] border border-[#55A630]/30"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-white mb-3">
-              Dapatkan Update Terbaru
-            </h3>
-            <p className="mb-6 text-gray-300">
-              Berlangganan newsletter kami untuk mendapatkan informasi produk terbaru dan tips menjaga kesegaran buah
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-              <input 
-                type="email" 
-                placeholder="Email Anda" 
-                className="flex-1 px-4 py-3 rounded-lg bg-[#1a4d32] border border-[#55A630]/50 focus:outline-none focus:ring-2 focus:ring-[#8CCF42] text-white"
-              />
-              <motion.button
-                className="px-6 py-3 bg-gradient-to-r from-[#55A630] to-[#8CCF42] text-white rounded-lg font-medium hover:shadow-lg transition-shadow"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Berlangganan
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-      
-      {/* Copyright */}
-      <div className="border-t border-[#1a4d32] py-6">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p>© {currentYear} Dickson Synergy. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-[#8CCF42] transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[#8CCF42] transition-colors">Terms of Service</Link>
+
+        {/* Kaki dokumen — halaman menandatangani dirinya seperti lembar data */}
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/12 pt-7 md:flex-row md:items-center md:justify-between">
+          <p className="tech-label text-white/40">
+            © {tahun} PT Dickson Synergy · Dok. EA-KORP-01 · Rev. {tahun}.01
+          </p>
+          <div className="flex gap-7">
+            <Link href="/privacy" className="text-sm transition-colors hover:text-lime">
+              Kebijakan Privasi
+            </Link>
+            <Link href="/terms" className="text-sm transition-colors hover:text-lime">
+              Syarat Layanan
+            </Link>
           </div>
         </div>
       </div>
-    </motion.footer>
-  )
-}
-
-const socialLinks = [
-  { icon: Facebook, url: "https://facebook.com" },
-  { icon: Twitter, url: "https://twitter.com" },
-  { icon: Instagram, url: "https://instagram.com" },
-  { icon: Linkedin, url: "https://linkedin.com" },
-]
-
-const quickLinks = [
-  { label: "Beranda", href: "/" },
-  { label: "Manfaat", href: "#features" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Kontak", href: "/kontak" },
-  { label: "Blog", href: "/blog" },
-]
-
-const products = [
-  { label: "Ethylene Absorber", href: "/produk/ethylene-absorber" },
-  { label: "Kemasan Buah", href: "/produk/kemasan-buah" },
-  { label: "Paket Ekspor", href: "/produk/paket-ekspor" },
-  { label: "Solusi Distribusi", href: "/produk/solusi-distribusi" },
-]
-
-function LeafIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-    </svg>
+    </footer>
   )
 }

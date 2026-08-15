@@ -1,25 +1,198 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* ==========================================================================
+   EthyleneAbsorber — Konsep "Korporat" / PT Dickson Synergy
+   Bahasa desain: LEMBAR DATA (technical datasheet)
+   Setiap klaim punya angka, standar, dan satuannya. Tata rupa mengikuti
+   bahasa gambar teknik: rel penggaris, grid biru, arsiran potongan,
+   anotasi monospace, dan kurung sudut.
+   ========================================================================== */
 
-:root {
-}
+@theme {
+  /* Warna korporat */
+  --color-ink: #003c5c; /* navy — struktur, judul, panel gelap */
+  --color-ink-deep: #002335; /* navy pekat — footer */
+  --color-brand: #198754; /* hijau Dickson — aksi & penegasan */
+  --color-brand-deep: #12684a;
+  --color-lime: #8ccf42; /* aksen di atas navy */
+  --color-paper: #f7faf8; /* kertas lembar data */
+  --color-paper-2: #eef4f0;
+  --color-mint: #eafaf0;
 
-@theme inline {
-}
+  /* Indikator kalium permanganat — ungu saat aktif, cokelat saat jenuh.
+     Ini warna reaksi yang sebenarnya, bukan dekorasi. */
+  --color-kmno4: #6d4c9f;
+  --color-spent: #9a6b3f;
 
-@media (prefers-color-scheme: dark) {
+  --font-sans: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-tech), ui-monospace, "SFMono-Regular", monospace;
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis-weight: none;
 }
 
-/* globals.css */
-.bg-dot-pattern {
-  background-image: radial-gradient(#003c5c 1.6px, transparent 1.6px);
-  background-size: 12px 12px;
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.025em;
 }
 
+/* --------------------------------------------------------------------------
+   1. Anotasi teknis — angka & kode selalu monospace bertabulasi
+   -------------------------------------------------------------------------- */
+.tech {
+  font-family: var(--font-tech), ui-monospace, "SFMono-Regular", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
 
-h1, h2, h3 { font-family: var(--font-display), system-ui, sans-serif; letter-spacing: -0.02em; }
+.tech-label {
+  font-family: var(--font-tech), ui-monospace, "SFMono-Regular", monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   2. Grid biru — kertas milimeter di balik bagian terang
+   -------------------------------------------------------------------------- */
+.bp-grid {
+  background-image:
+    linear-gradient(to right, rgb(0 60 92 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 60 92 / 0.055) 1px, transparent 1px),
+    linear-gradient(to right, rgb(0 60 92 / 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 60 92 / 0.028) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    16px 16px,
+    16px 16px;
+}
+
+.bp-grid-dark {
+  background-image:
+    linear-gradient(to right, rgb(140 207 66 / 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(140 207 66 / 0.09) 1px, transparent 1px),
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    16px 16px,
+    16px 16px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Arsiran potongan — evolusi motif diagonal khas varian ini
+   -------------------------------------------------------------------------- */
+.hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--hatch, rgb(0 60 92 / 0.13)) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+.hatch-lime {
+  --hatch: rgb(140 207 66 / 0.28);
+}
+
+.hatch-white {
+  --hatch: rgb(255 255 255 / 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   4. Rel penggaris — satuan ukur sebagai pembatas bagian
+   -------------------------------------------------------------------------- */
+.tick-rail {
+  height: 10px;
+  background-image:
+    repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 50px);
+  background-size:
+    100% 4px,
+    100% 10px;
+  background-repeat: repeat-x;
+  background-position: left top;
+  opacity: 0.35;
+}
+
+/* --------------------------------------------------------------------------
+   5. Kurung sudut — bingkai callout pada gambar teknik
+   -------------------------------------------------------------------------- */
+.corner-frame {
+  position: relative;
+}
+.corner-frame::before,
+.corner-frame::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--corner, rgb(25 135 84 / 0.85));
+  border-style: solid;
+  pointer-events: none;
+}
+.corner-frame::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.corner-frame::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* --------------------------------------------------------------------------
+   6. Rel indikator — gradien reaksi kalium permanganat
+   -------------------------------------------------------------------------- */
+.indicator-rail {
+  background-image: linear-gradient(
+    to right,
+    var(--color-kmno4) 0%,
+    #7a5a93 34%,
+    #8a6270 58%,
+    var(--color-spent) 82%,
+    #6f4f30 100%
+  );
+}
+
+/* Varian tegak — dipakai pada layar sempit, tempat sumbu waktu mendatar
+   tidak muat tanpa memaksa pengguna menggulir ke samping. */
+.indicator-rail-v {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-kmno4) 0%,
+    #7a5a93 34%,
+    #8a6270 58%,
+    var(--color-spent) 82%,
+    #6f4f30 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   7. Aksesibilitas — hormati preferensi gerak minim
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fokus keyboard yang terlihat di atas latar terang maupun navy */
+:where(a, button, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
