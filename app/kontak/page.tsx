@@ -159,8 +159,8 @@ export default function ContactPage() {
                     </span>
                     <h3 className="mb-3 text-xl font-extrabold text-ink">Permintaan tercatat</h3>
                     <p className="mx-auto max-w-sm text-sm leading-relaxed text-slate-600">
-                      Terima kasih. Tim teknis meninjau data muatan Anda dan menghubungi kembali
-                      pada jam kerja berikutnya, umumnya dalam 48 jam.
+                      Terima kasih. Halaman ini konsep desain untuk kontes, jadi formulir belum
+                      tersambung dan data muatan Anda tidak terkirim ke tim teknis.
                     </p>
                     <button
                       onClick={() => setTerkirim(false)}
