@@ -28,7 +28,7 @@ export const PRODUK: Produk[] = [
     slug: 'ethyleneabsorber-sachet',
     kode: 'EA-01',
     nama: 'EthyleneAbsorber Sachet',
-    image: '/images/fruit-sachet.webp',
+    image: '/images/sachet-buah.webp',
     fungsi: 'Etilen',
     ringkas: 'Penyerap gas etilen berbasis kalium permanganat untuk komoditas segar di dalam kemasan, peti, dan kontainer.',
     uraian:
@@ -114,7 +114,7 @@ export const PRODUK: Produk[] = [
     slug: 'silica-gel',
     kode: 'SG-04',
     nama: 'Silica Gel',
-    image: '/images/silica.webp',
+    image: '/images/silika.webp',
     fungsi: 'Kelembapan',
     ringkas: 'Butiran silica gel mutu industri untuk proteksi kelembapan pada barang jadi, komponen, dan peralatan.',
     uraian:

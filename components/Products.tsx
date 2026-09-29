@@ -8,8 +8,8 @@ const products = [
     no: '01',
     slug: 'ethyleneabsorber-sachet',
     name: 'EthyleneAbsorber Sachet',
-    // ps1.webp memperlihatkan orang memberi lakban pada kardus, bukan sachetnya.
-    image: '/images/fruit-sachet.webp',
+    // Foto sachet di antara buah; foto lama (orang melakban kardus) tidak memperlihatkan sachetnya.
+    image: '/images/sachet-buah.webp',
     desc: 'Penyerap gas etilen berbasis kalium permanganat untuk komoditas segar di dalam kemasan, peti, dan kontainer.',
     specs: [
       ['Bentuk', 'Sachet'],
@@ -48,7 +48,7 @@ const products = [
     no: '04',
     slug: 'silica-gel',
     name: 'Silica Gel',
-    image: '/images/silica.webp',
+    image: '/images/silika.webp',
     desc: 'Butiran silica gel mutu industri untuk proteksi kelembapan pada barang jadi, komponen, dan peralatan.',
     specs: [
       ['Bentuk', 'Butiran'],

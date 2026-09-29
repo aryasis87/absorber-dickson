@@ -120,7 +120,7 @@ const Hero = () => {
 
             <div className="relative aspect-[5/6] w-full overflow-hidden bg-paper-2">
               <Image
-                src="/images/fruit-sachet.webp"
+                src="/images/sachet-buah.webp"
                 alt="Sachet EthyleneAbsorber ditempatkan bersama buah segar di dalam kemasan"
                 fill
                 priority
