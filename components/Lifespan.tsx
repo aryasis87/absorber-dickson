@@ -59,7 +59,7 @@ const Lifespan = () => {
             <span className="tech-label font-semibold text-slate-500">
               Gbr. 02 — Warna indikator terhadap hari pemakaian
             </span>
-            <span className="tech-label text-slate-400">Satuan: hari</span>
+            <span className="tech-label text-slate-500">Satuan: hari</span>
           </figcaption>
 
           {/* ---------------------------------------------------------------- */}
@@ -129,7 +129,7 @@ const Lifespan = () => {
                     />
                     <span
                       className={`tech-label block leading-[1.45] ${
-                        z.tone === 'brand' ? 'text-brand' : 'text-slate-400'
+                        z.tone === 'brand' ? 'text-brand' : 'text-slate-500'
                       }`}
                     >
                       {z.label}
@@ -229,7 +229,7 @@ const Lifespan = () => {
                     />
                     <span
                       className={`tech-label mt-2 block leading-[1.5] ${
-                        z.tone === 'brand' ? 'text-brand' : 'text-slate-400'
+                        z.tone === 'brand' ? 'text-brand' : 'text-slate-500'
                       }`}
                     >
                       {z.label}

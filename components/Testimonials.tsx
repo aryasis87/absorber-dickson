@@ -88,7 +88,7 @@ const Testimonials = () => {
           ))}
         </div>
 
-        <p className="tech-label mt-8 leading-[1.6] text-slate-400">
+        <p className="tech-label mt-8 leading-[1.6] text-slate-500">
           Kutipan di atas adalah ilustrasi skenario penggunaan untuk keperluan purwarupa desain.
         </p>
       </div>

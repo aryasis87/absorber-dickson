@@ -68,7 +68,10 @@ const __jsonld = {
 
 export const metadata = {
   metadataBase: new URL("https://absorber-dickson.vercel.app"),
-  title: "EthyleneAbsorber — Konsep Korporat | Dickson Synergy",
+  title: {
+    default: "EthyleneAbsorber — Konsep Korporat | Dickson Synergy",
+    template: "%s — EthyleneAbsorber · Dickson Synergy",
+  },
   description:
     "Landing page EthyleneAbsorber konsep \"Korporat\": mengedepankan kredibilitas PT Dickson Synergy sebagai penyedia solusi industri. Tersertifikasi BPOM RI NA18191100273, FDA 21 CFR 175.300, dan EU No 10/2011.",
   applicationName: "EthyleneAbsorber",

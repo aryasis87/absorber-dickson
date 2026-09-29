@@ -6,6 +6,7 @@ import { ArrowRight, Leaf, PackageCheck } from 'lucide-react';
 const products = [
   {
     no: '01',
+    slug: 'ethyleneabsorber-sachet',
     name: 'EthyleneAbsorber Sachet',
     // ps1.webp memperlihatkan orang memberi lakban pada kardus, bukan sachetnya.
     image: '/images/fruit-sachet.webp',
@@ -19,6 +20,7 @@ const products = [
   },
   {
     no: '02',
+    slug: 'container-dry-ii',
     name: 'Container Dry® II',
     image: '/images/container.webp',
     desc: 'Desiccant gantung berdaya serap tinggi yang menahan kelembapan di dalam kontainer selama pelayaran jarak jauh.',
@@ -31,6 +33,7 @@ const products = [
   },
   {
     no: '03',
+    slug: 'desi-pak',
     name: 'Desi Pak®',
     image: '/images/desi.webp',
     desc: 'Desiccant dalam kemasan kantong berbahan tanah liat, fleksibel untuk kemasan ritel maupun muatan palet.',
@@ -43,6 +46,7 @@ const products = [
   },
   {
     no: '04',
+    slug: 'silica-gel',
     name: 'Silica Gel',
     image: '/images/silica.webp',
     desc: 'Butiran silica gel mutu industri untuk proteksi kelembapan pada barang jadi, komponen, dan peralatan.',
@@ -84,7 +88,7 @@ const Products = () => {
           {products.map((p) => (
             <article
               key={p.name}
-              className="group flex flex-col border border-ink/12 bg-white transition-all duration-300 hover:border-brand/45 hover:shadow-[0_18px_44px_-24px_rgba(0,60,92,0.35)]"
+              className="group relative flex flex-col border border-ink/12 bg-white transition-all duration-300 hover:border-brand/45 hover:shadow-[0_18px_44px_-24px_rgba(0,60,92,0.35)]"
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-paper-2">
                 <Image
@@ -108,13 +112,15 @@ const Products = () => {
               <div aria-hidden="true" className="tick-rail h-1.5 text-ink" />
 
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="mb-2.5 text-base font-bold text-ink">{p.name}</h3>
+                <h3 className="mb-2.5 text-base font-bold text-ink">
+                  <Link href={`/produk/${p.slug}`} className="after:absolute after:inset-0">{p.name}</Link>
+                </h3>
                 <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-600">{p.desc}</p>
 
                 <dl className="border-t border-ink/10 pt-4">
                   {p.specs.map(([k, v]) => (
                     <div key={k} className="flex items-baseline justify-between gap-3 py-1.5">
-                      <dt className="tech-label text-slate-400">{k}</dt>
+                      <dt className="tech-label text-slate-500">{k}</dt>
                       <dd className="tech text-[0.8125rem] font-semibold text-ink">{v}</dd>
                     </div>
                   ))}

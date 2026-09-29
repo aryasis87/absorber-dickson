@@ -12,7 +12,7 @@
   /* Warna korporat */
   --color-ink: #003c5c; /* navy — struktur, judul, panel gelap */
   --color-ink-deep: #002335; /* navy pekat — footer */
-  --color-brand: #198754; /* hijau Dickson — aksi & penegasan */
+  --color-brand: #157a4b; /* hijau Dickson — aksi & penegasan (sedikit digelapkan dari #198754 agar teks kecil lolos kontras 4,5:1) */
   --color-brand-deep: #12684a;
   --color-lime: #8ccf42; /* aksen di atas navy */
   --color-paper: #f7faf8; /* kertas lembar data */

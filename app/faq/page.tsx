@@ -202,14 +202,14 @@ export default function FAQPage() {
             </label>
             <div className="relative mb-5">
               <Search
-                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-slate-400"
+                className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-slate-500"
                 size={18}
               />
               <input
                 id="cari-faq"
                 type="search"
                 placeholder="Misal: dosis, ekspor, BPOM…"
-                className="w-full border border-ink/15 bg-paper py-3.5 pr-4 pl-12 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none"
+                className="w-full border border-ink/15 bg-paper py-3.5 pr-4 pl-12 text-sm text-ink placeholder:text-slate-500 focus:border-brand focus:outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -291,7 +291,7 @@ export default function FAQPage() {
                               <dl className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-l-2 border-brand bg-paper py-4 pr-5 pl-5">
                                 {faq.meta.map((m) => (
                                   <div key={m.label}>
-                                    <dt className="tech-label text-slate-400">{m.label}</dt>
+                                    <dt className="tech-label text-slate-500">{m.label}</dt>
                                     <dd className="tech mt-1 text-[0.8125rem] font-semibold text-ink">
                                       {m.value}
                                     </dd>
@@ -309,7 +309,7 @@ export default function FAQPage() {
             </div>
           ) : (
             <div className="border border-ink/12 bg-white px-6 py-16 text-center">
-              <span className="mx-auto mb-6 flex h-14 w-14 items-center justify-center border border-ink/15 text-slate-400">
+              <span className="mx-auto mb-6 flex h-14 w-14 items-center justify-center border border-ink/15 text-slate-500">
                 <Search size={22} />
               </span>
               <h2 className="mb-2 text-lg font-bold text-ink">Entri tidak ditemukan</h2>

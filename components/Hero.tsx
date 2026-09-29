@@ -104,7 +104,7 @@ const Hero = () => {
           >
             <span className="absolute -left-1 top-0 h-px w-2.5 bg-ink/40" />
             <span className="absolute -left-1 bottom-0 h-px w-2.5 bg-ink/40" />
-            <span className="tech-label absolute top-1/2 -left-1 origin-left -translate-y-1/2 -rotate-90 whitespace-nowrap text-slate-400">
+            <span className="tech-label absolute top-1/2 -left-1 origin-left -translate-y-1/2 -rotate-90 whitespace-nowrap text-slate-500">
               Gbr. 01
             </span>
           </div>
@@ -115,7 +115,7 @@ const Hero = () => {
               <span className="tech-label font-semibold text-slate-500">
                 Sachet dalam kemasan
               </span>
-              <span className="tech-label text-slate-400">Skala 1:1</span>
+              <span className="tech-label text-slate-500">Skala 1:1</span>
             </div>
 
             <div className="relative aspect-[5/6] w-full overflow-hidden bg-paper-2">
@@ -143,14 +143,14 @@ const Hero = () => {
               ditumpangkan pada layar sempit ia menutupi gambar produk dan
               memotong rel penggaris di kaki bingkai. */}
           <div className="mt-4 w-full bg-white p-5 ring-1 ring-ink/10 lg:absolute lg:-bottom-8 lg:-left-8 lg:mt-0 lg:w-[16.5rem] lg:shadow-[0_18px_40px_-18px_rgba(0,60,92,0.45)]">
-            <p className="tech-label mb-3 font-semibold text-slate-400">Indikator daya serap</p>
+            <p className="tech-label mb-3 font-semibold text-slate-500">Indikator daya serap</p>
             <div className="mb-3 flex items-center gap-3">
               <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-kmno4">
                 <span className="h-3 w-3 rounded-full bg-white/35" />
               </span>
               <div>
                 <p className="text-sm font-bold text-ink">Ungu — masih aktif</p>
-                <p className="tech-label mt-1 text-slate-400">Berubah cokelat saat jenuh</p>
+                <p className="tech-label mt-1 text-slate-500">Berubah cokelat saat jenuh</p>
               </div>
             </div>
             <div aria-hidden="true" className="indicator-rail h-1.5 w-full" />

@@ -57,7 +57,7 @@ const CertBar = () => {
               >
                 <dt className="text-sm font-bold text-ink">{r.authority}</dt>
                 <dd className="tech mt-1.5 text-[0.8125rem] font-semibold text-brand">{r.code}</dd>
-                <dd className="tech-label mt-2 leading-[1.5] text-slate-400">{r.scope}</dd>
+                <dd className="tech-label mt-2 leading-[1.5] text-slate-500">{r.scope}</dd>
               </div>
             ))}
           </dl>

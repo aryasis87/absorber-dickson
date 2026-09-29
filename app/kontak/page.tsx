@@ -143,7 +143,7 @@ export default function ContactPage() {
             <div className="corner-frame bg-white p-6 shadow-2xl sm:p-9">
               <div className="mb-7 flex items-baseline justify-between border-b border-ink/12 pb-5">
                 <h2 className="text-lg font-extrabold text-ink">Formulir Permintaan</h2>
-                <span className="tech-label text-slate-400">Form EA-01</span>
+                <span className="tech-label text-slate-500">Form EA-01</span>
               </div>
 
               <AnimatePresence mode="wait">
@@ -263,7 +263,7 @@ export default function ContactPage() {
                         value={form.pesan}
                         onChange={ubah}
                         placeholder="Kendala yang pernah dialami, target masa simpan, atau dokumen yang Anda perlukan."
-                        className="w-full resize-y border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none"
+                        className="w-full resize-y border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-slate-500 focus:border-brand focus:outline-none"
                       />
                     </div>
 
@@ -285,7 +285,7 @@ export default function ContactPage() {
                       )}
                     </button>
 
-                    <p className="tech-label leading-[1.6] text-slate-400">
+                    <p className="tech-label leading-[1.6] text-slate-500">
                       Purwarupa desain — pengiriman formulir disimulasikan dan data tidak tersimpan.
                     </p>
                   </motion.form>
@@ -310,10 +310,12 @@ export default function ContactPage() {
           <dl className="grid gap-px bg-ink/12 sm:grid-cols-2 lg:grid-cols-4">
             {kontak.map((k) => (
               <div key={k.label} className="bg-white p-7">
-                <span className="mb-5 flex h-11 w-11 items-center justify-center bg-brand/12 text-brand">
-                  <k.icon size={19} strokeWidth={2} />
-                </span>
-                <dt className="tech-label mb-2 font-semibold text-slate-400">{k.label}</dt>
+                <dt className="mb-2">
+                  <span aria-hidden="true" className="mb-5 flex h-11 w-11 items-center justify-center bg-brand/12 text-brand">
+                    <k.icon size={19} strokeWidth={2} />
+                  </span>
+                  <span className="tech-label font-semibold text-slate-500">{k.label}</span>
+                </dt>
                 <dd className="text-sm leading-snug font-bold text-ink">
                   {k.href ? (
                     <a href={k.href} className="transition-colors hover:text-brand">
@@ -388,9 +390,9 @@ function Field({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none"
+        className="w-full border border-ink/15 bg-paper px-4 py-3 text-sm text-ink placeholder:text-slate-500 focus:border-brand focus:outline-none"
       />
-      {hint && <p className="tech-label mt-2 leading-[1.5] text-slate-400">{hint}</p>}
+      {hint && <p className="tech-label mt-2 leading-[1.5] text-slate-500">{hint}</p>}
     </div>
   )
 }

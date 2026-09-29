@@ -8,13 +8,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const NAV = [
   { label: 'Beranda', href: '/' },
-  { label: 'Masalah', href: '/#masalah' },
   { label: 'Cara Kerja', href: '/#cara-kerja' },
   { label: 'Masa Pakai', href: '/#masa-pakai' },
-  { label: 'Produk', href: '/#produk' },
-  { label: 'Penerapan', href: '/#penerapan' },
+  { label: 'Katalog', href: '/produk' },
+  { label: 'Catatan Teknis', href: '/catatan-teknis' },
   { label: 'FAQ', href: '/faq' },
 ]
+
+const aktif = (pathname: string, href: string) =>
+  href === '/' ? pathname === '/' : !href.startsWith('/#') && (pathname === href || pathname.startsWith(href + '/'))
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -86,7 +88,7 @@ export default function Navbar() {
               <span className="block text-[1.0625rem] font-extrabold tracking-tight text-ink">
                 Ethylene<span className="font-normal text-brand">Absorber</span>
               </span>
-              <span className="tech-label mt-1 block text-[0.5625rem] text-slate-400">
+              <span className="tech-label mt-1 block text-[0.5625rem] text-slate-500">
                 PT Dickson Synergy
               </span>
             </span>
@@ -97,12 +99,13 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="group relative px-3 py-2 text-[0.8125rem] font-semibold text-slate-600 transition-colors hover:text-ink"
+                aria-current={aktif(pathname, item.href) ? 'page' : undefined}
+                className={`group relative px-3 py-2 text-[0.8125rem] font-semibold transition-colors hover:text-ink ${aktif(pathname, item.href) ? 'text-ink' : 'text-slate-600'}`}
               >
                 {item.label}
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-3 bottom-1 h-[2px] origin-left scale-x-0 bg-brand transition-transform duration-300 group-hover:scale-x-100"
+                  className={`absolute inset-x-3 bottom-1 h-[2px] origin-left bg-brand transition-transform duration-300 group-hover:scale-x-100 ${aktif(pathname, item.href) ? 'scale-x-100' : 'scale-x-0'}`}
                 />
               </Link>
             ))}
@@ -151,7 +154,7 @@ export default function Navbar() {
               aria-label="Menu navigasi"
             >
               <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
-                <span className="tech-label font-semibold text-slate-400">Daftar Isi</span>
+                <span className="tech-label font-semibold text-slate-500">Daftar Isi</span>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="-mr-2 p-2 text-ink"
@@ -186,7 +189,7 @@ export default function Navbar() {
                   Minta Sample Gratis
                   <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
-                <p className="tech-label mt-4 text-center text-slate-400">
+                <p className="tech-label mt-4 text-center text-slate-500">
                   REG. BPOM RI NA18191100273
                 </p>
               </div>
